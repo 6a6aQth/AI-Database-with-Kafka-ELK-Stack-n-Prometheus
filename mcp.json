@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "mysql-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "mysql-mcp-server",
+        "--config",
+        "{\"mysqlHost\":\"<INSERT_MYSQL_HOST>\",\"mysqlPort\":<INSERT_MYSQL_PORT>,\"mysqlUser\":\"<INSERT_MYSQL_USER>\",\"mysqlDatabase\":\"<INSERT_MYSQL_DATABASE>\",\"mysqlPassword\":\"<INSERT_MYSQL_PASSWORD>\"}"
+      ]
+    },
+    "hyperbrowser": {
+      "command": "npx",
+      "args": ["-y", "hyperbrowser-mcp"],
+      "env": {
+        "HYPERBROWSER_API_KEY": "<INSERT_HYPERBROWSER_API_KEY>"
+      }
+    }
+  }
+}
