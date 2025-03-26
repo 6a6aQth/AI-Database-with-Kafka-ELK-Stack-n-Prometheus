@@ -1,63 +1,71 @@
-# AI Interactive Database with Kafka, ELK, and Prometheus Monitoring
+# DevOps-Driven AI System with Real-Time Database Interaction
 
-## 🚀 Project Overview
+## Overview
+This project demonstrates a cutting-edge DevOps implementation of an AI system interacting with a MySQL database. It incorporates:
 
-This repository will showcase a **DevOps-driven AI system** that interacts with a database, leveraging **Apache Kafka** for real-time messaging and **ELK Stack** for comprehensive monitoring and log management. Additionally, **Prometheus** will be integrated for advanced metrics collection and alerting.
+- **Apache Kafka** for real-time messaging.
+- **ELK Stack (Elasticsearch, Logstash, Kibana)** for monitoring and log management.
+- **Prometheus** for metrics collection and alerting.
+- **Grafana** for visualization.
 
-The project is designed to highlight cutting-edge practices in **AI-augmented data pipelines**, **real-time monitoring**, and **streamlined observability**, demonstrating the intersection of **AI**, **data engineering**, and **DevOps** principles.
+## Architecture
+1. **MySQL**: Acts as the primary database storing application data.
+2. **Apache Kafka**: Handles real-time data streaming.
+3. **ELK Stack**: Captures logs from Kafka and MySQL for observability.
+4. **Prometheus**: Collects metrics for Kafka, MySQL, and system health.
+5. **Grafana**: Visualizes metrics for real-time monitoring.
 
----
+## Components
+### 1. MySQL
+- Database for storing transactional data.
+- Credentials are securely injected through environment variables.
 
-## 🌟 Key Features (Coming Soon)
+### 2. Apache Kafka
+- Broker for real-time messaging.
+- Works with Zookeeper for managing configuration.
 
-- **AI-Powered Database Interaction**  
-   An intelligent system that interfaces with a database to fetch, process, and analyze data efficiently.
+### 3. ELK Stack
+- Elasticsearch for log storage.
+- Logstash for log processing.
+- Kibana for log visualization.
 
-- **Real-Time Event Streaming**  
-   Apache Kafka will handle high-throughput messaging between AI services and the database.
+### 4. Prometheus
+- Collects metrics for system health and performance.
+- Uses a YAML configuration for scraping targets.
 
-- **Centralized Log Monitoring**  
-   The ELK (Elasticsearch, Logstash, Kibana) stack will provide detailed insights into system performance and logs.
+### 5. Grafana
+- Connects to Prometheus for metric visualization.
 
-- **Metrics and Alerts with Prometheus**  
-   Seamless integration with Prometheus for real-time metrics, alerting, and performance monitoring.
+## Prerequisites
+- Docker & Docker Compose installed.
+- Ports 3300, 9092, 5601, 9200, 9090, and 3000 open.
 
-- **DevOps-Focused Architecture**  
-   Designed to showcase DevOps skills with containerized deployment, CI/CD pipelines, and infrastructure automation.
+## How to Run
+1. **Clone the Repository**
+```bash
+git clone <repository-url>
+cd <repository-folder>
+```
 
----
+2. **Set Environment Variables**
+Replace placeholders in `docker-compose.yml` and `mysql_dockerfile`.
 
-## 💡 Goals and Objectives
+3. **Start the Services**
+```bash
+docker-compose up -d
+```
 
-- Demonstrate a scalable **AI and DevOps-driven system**.
-- Showcase the integration of **real-time streaming, monitoring, and observability tools**.
-- Provide a comprehensive example of modern DevOps practices in action.
+4. **Access the Services:**
+- **MySQL:** `localhost:3300`
+- **Kafka:** `localhost:9092`
+- **Kibana:** `localhost:5601`
+- **Prometheus:** `localhost:9090`
+- **Grafana:** `localhost:3000`
 
----
+## Observability and Monitoring
+- **Kafka Logs:** Visible in Kibana.
+- **Prometheus:** Metric scraping and alerting.
+- **Grafana:** Custom dashboards for performance metrics.
 
-## 🔧 Tech Stack
-
-- **AI Framework**: TBD (e.g., TensorFlow, PyTorch, or custom models)
-- **Database**: TBD (e.g., PostgreSQL, MongoDB)
-- **Event Streaming**: Apache Kafka
-- **Monitoring**: ELK Stack (Elasticsearch, Logstash, Kibana), Prometheus
-- **Infrastructure**: Docker, Kubernetes (Optional)
-
----
-
-## 📅 Status: Coming Soon!
-
-This project is currently under development. Stay tuned for updates! 🚧  
-Follow the repository to get notified when the first version is released.
-
----
-
-## 🤝 Contributions
-
-Contributions will be welcomed once the project is live. For now, feel free to open issues with ideas or suggestions.
-
----
-
-## 📬 Contact
-
-For inquiries or collaboration, please contact me via [LinkedIn](https://linkedin.com/in/your-profile) or email: your-email@example.com.
+## Conclusion
+This project showcases how to integrate real-time messaging, metrics collection, and log management in a DevOps environment, emphasizing scalability, observability, and automation.
