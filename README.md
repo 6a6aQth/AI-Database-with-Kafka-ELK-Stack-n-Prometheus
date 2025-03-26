@@ -1,71 +1,74 @@
-# DevOps-Driven AI System with Real-Time Database Interaction
+# RAGBot Starter
 
-## Overview
-This project demonstrates a cutting-edge DevOps implementation of an AI system interacting with a MySQL database. It incorporates:
+This project is a starter for creating a chatbot using MySQL, Kafka, MCP Server, and Prometheus. It's designed to be easy to deploy and use, with a focus on performance and usability.
 
-- **Apache Kafka** for real-time messaging.
-- **ELK Stack (Elasticsearch, Logstash, Kibana)** for monitoring and log management.
-- **Prometheus** for metrics collection and alerting.
-- **Grafana** for visualization.
+## Features
+- **MySQL Integration:** Store and retrieve data from your MySQL database with ease.
+- **Kafka Integration:** Leverage Kafka for real-time messaging.
+- **MCP Server:** Interact with your MCP server for processing.
+- **Prometheus Integration:** Collect metrics and enable alerting for system health.
+- **Custom Interface:** A simple, customizable chat interface for user interaction.
 
-## Architecture
-1. **MySQL**: Acts as the primary database storing application data.
-2. **Apache Kafka**: Handles real-time data streaming.
-3. **ELK Stack**: Captures logs from Kafka and MySQL for observability.
-4. **Prometheus**: Collects metrics for Kafka, MySQL, and system health.
-5. **Grafana**: Visualizes metrics for real-time monitoring.
+## Getting Started
 
-## Components
-### 1. MySQL
-- Database for storing transactional data.
-- Credentials are securely injected through environment variables.
+### Prerequisites
+- A running **MySQL** server.
+- A working **Kafka** setup.
+- An **MCP Server** running.
+- **Prometheus** for metrics collection.
 
-### 2. Apache Kafka
-- Broker for real-time messaging.
-- Works with Zookeeper for managing configuration.
+## Deployment
 
-### 3. ELK Stack
-- Elasticsearch for log storage.
-- Logstash for log processing.
-- Kibana for log visualization.
+Deploy the chatbot system using Docker Compose:
 
-### 4. Prometheus
-- Collects metrics for system health and performance.
-- Uses a YAML configuration for scraping targets.
-
-### 5. Grafana
-- Connects to Prometheus for metric visualization.
-
-## Prerequisites
-- Docker & Docker Compose installed.
-- Ports 3300, 9092, 5601, 9200, 9090, and 3000 open.
-
-## How to Run
-1. **Clone the Repository**
-```bash
-git clone <repository-url>
-cd <repository-folder>
-```
-
-2. **Set Environment Variables**
-Replace placeholders in `docker-compose.yml` and `mysql_dockerfile`.
-
-3. **Start the Services**
 ```bash
 docker-compose up -d
 ```
 
-4. **Access the Services:**
-- **MySQL:** `localhost:3300`
-- **Kafka:** `localhost:9092`
-- **Kibana:** `localhost:5601`
-- **Prometheus:** `localhost:9090`
-- **Grafana:** `localhost:3000`
+Ensure you have configured your **MySQL**, **Kafka**, **MCP Server**, and **Prometheus** services properly.
 
-## Observability and Monitoring
-- **Kafka Logs:** Visible in Kibana.
-- **Prometheus:** Metric scraping and alerting.
-- **Grafana:** Custom dashboards for performance metrics.
+## Local Development
 
-## Conclusion
-This project showcases how to integrate real-time messaging, metrics collection, and log management in a DevOps environment, emphasizing scalability, observability, and automation.
+1. Clone this repository to your local machine.
+2. Install dependencies by running:
+
+```bash
+npm install
+```
+
+3. Set up the following environment variables in your IDE or `.env` file:
+
+```env
+MYSQL_HOST=<INSERT_MYSQL_HOST>
+MYSQL_USER=<INSERT_MYSQL_USER>
+MYSQL_PASSWORD=<INSERT_MYSQL_PASSWORD>
+MYSQL_DATABASE=<INSERT_MYSQL_DATABASE>
+
+KAFKA_BROKER=<INSERT_KAFKA_BROKER>
+MCP_SERVER_URL=<INSERT_MCP_SERVER_URL>
+PROMETHEUS_URL=<INSERT_PROMETHEUS_URL>
+```
+
+4. Start the services with:
+
+```bash
+npm run dev
+```
+
+## Running the Project
+
+To start the development server, run:
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:3000` to view the chatbot in your browser.
+
+## Monitoring and Logging
+- **Prometheus** collects metrics and provides real-time alerting.
+- **Kafka** enables real-time messaging for chat logs.
+- **MCP Server** processes and responds to specific requests.
+
+## Customization
+Modify the chatbot interface or backend to suit your specific business needs.
