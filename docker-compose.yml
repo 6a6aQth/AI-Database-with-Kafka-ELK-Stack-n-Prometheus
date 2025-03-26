@@ -1,62 +1,59 @@
-version: '3.8'
-
+version: "3.9"
 services:
   
   # MySQL Database
   mysql:
     image: mysql:8.0
-    container_name: mysql_mcp_server
+    container_name: mysql_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: chat_db
+      MYSQL_ROOT_PASSWORD: chat_pass
       MYSQL_USER: chat_user
       MYSQL_PASSWORD: chat_pass
-    volumes:
-      - mysql_data:/var/lib/mysql
+      MYSQL_DATABASE: chat_db
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
 
-  # Apache Kafka
+  # Kafka Broker
   kafka:
     image: wurstmeister/kafka:2.13-2.7.0
-    container_name: kafka_server
-    restart: always
+    container_name: kafka_broker
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
     ports:
       - "9092:9092"
     depends_on:
       - zookeeper
 
-  # Zookeeper (Required for Kafka)
+  # Zookeeper
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
-    restart: always
     ports:
       - "2181:2181"
 
-  # Prometheus (Monitoring)
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  # Elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.10
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
     ports:
-      - "9090:9090"
+      - "9200:9200"
 
-  # ELK Stack (Elasticsearch, Logstash, Kibana)
-  elk:
-    image: sebp/elk:latest
-    container_name: elk_stack
-    restart: always
+  # Logstash
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.17.10
+    container_name: logstash
     ports:
-      - "5601:5601"  # Kibana
-      - "9200:9200"  # Elasticsearch
-      - "5044:5044"  # Logstash
+      - "5044:5044"
+    depends_on:
+      - elasticsearch
 
-volumes:
-  mysql_data:
+  # Kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.
