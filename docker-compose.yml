@@ -1,69 +1,62 @@
 version: '3.8'
 
 services:
+  
+  # MySQL Database
   mysql:
     image: mysql:8.0
-    container_name: mysql_db
+    container_name: mysql_mcp_server
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: <INSERT_ROOT_PASSWORD>
-      MYSQL_DATABASE: <INSERT_DATABASE_NAME>
-      MYSQL_USER: <INSERT_USER>
-      MYSQL_PASSWORD: <INSERT_PASSWORD>
-    ports:
-      - "3300:3306"
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: chat_db
+      MYSQL_USER: chat_user
+      MYSQL_PASSWORD: chat_pass
     volumes:
       - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
 
+  # Apache Kafka
   kafka:
     image: wurstmeister/kafka:2.13-2.7.0
     container_name: kafka_server
+    restart: always
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: <INSERT_ZOOKEEPER_CONNECT>
-      KAFKA_ADVERTISED_LISTENERS: <INSERT_ADVERTISED_LISTENERS>
-    depends_on:
-      - zookeeper
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
     ports:
       - "9092:9092"
+    depends_on:
+      - zookeeper
 
+  # Zookeeper (Required for Kafka)
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: wurstmeister/zookeeper
     container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+    restart: always
     ports:
       - "2181:2181"
 
-  elk:
-    image: sebp/elk:latest
-    container_name: elk_stack
-    environment:
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
-    ports:
-      - "5601:5601"  # Kibana
-      - "9200:9200"  # Elasticsearch
-      - "5044:5044"  # Logstash
-    volumes:
-      - elk_data:/var/lib/elasticsearch
-
+  # Prometheus (Monitoring)
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus_server
+    container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
 
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
+  # ELK Stack (Elasticsearch, Logstash, Kibana)
+  elk:
+    image: sebp/elk:latest
+    container_name: elk_stack
+    restart: always
     ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
+      - "5601:5601"  # Kibana
+      - "9200:9200"  # Elasticsearch
+      - "5044:5044"  # Logstash
 
 volumes:
   mysql_data:
-  elk_data:
