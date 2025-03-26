@@ -1,4 +1,5 @@
-# RAGBot Starter
+# AI-Database-with-Kafka-ELK-Stack-n-Prometheus
+
 
 This project is a starter for creating a chatbot using MySQL, Kafka, MCP Server, and Prometheus. It's designed to be easy to deploy and use, with a focus on performance and usability.
 
